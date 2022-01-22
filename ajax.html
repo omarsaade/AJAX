@@ -21,7 +21,7 @@
             // On Ready State Change => hye function called when ready State
             // change (readyState === 4)
             myRequest.onreadystatechange = function () {
-                console.log(this.status);
+                //console.log(this.status);
 
                 /* 
                     note :onsole.log(this.statusText);
@@ -37,8 +37,8 @@
                 // If Request is Finished and Response is Ready and Status
                 // Code is 200 (ok) Get The Response Text
                 if (this.readyState === 4 && this.status === 200) {
-                    console.log(this.responseText);
-                    console.log(myRequest);
+                    /*  console.log(this.responseText);
+                      console.log(myRequest);*/
                 }
 
 
