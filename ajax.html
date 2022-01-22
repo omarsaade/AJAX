@@ -1,1 +1,62 @@
-//
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button onclick="getRepos()">Get Repos</button>
+    <script>
+        // Make function to do the Request
+
+        function getRepos() {
+            //Assign the request Object to Variable
+            // XMLHttpRequest huwe 3ibara 3an object bi badel el bayanet
+            //ma3 el server wara2 el kawalis
+            var myRequest = new XMLHttpRequest();
+            // On Ready State Change => hye function called when ready State
+            // change (readyState === 4)
+            myRequest.onreadystatechange = function () {
+                console.log(this.status);
+
+                /* 
+                    note :onsole.log(this.statusText);
+                Ready State => hye the status of the Request
+                [0] Request not Initialized
+                [1] Server Connection Established // itisal bel server tam
+                [2] Request Received
+                [3] Processing Request
+                [4] Request is Finished and Response is Ready
+                // Status => Response Status Code
+                [200] Ok
+                */
+                // If Request is Finished and Response is Ready and Status
+                // Code is 200 (ok) Get The Response Text
+                if (this.readyState === 4 && this.status === 200) {
+                    console.log(this.responseText);
+                    console.log(myRequest);
+                }
+
+
+            };
+
+            //XMLHttpRequest.open(Method , URL , Async , User , Password)
+            myRequest.open('GET', 'https://docs.github.com/en/rest/reference/users', true);
+            myRequest.send();//send to server
+
+        }
+
+
+
+
+
+
+    </script>
+
+</body>
+
+</html>
