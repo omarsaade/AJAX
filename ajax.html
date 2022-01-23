@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -10,6 +10,7 @@
 
 <body>
     <button onclick="getRepos()">Get Repos</button>
+    <div id="show"></div>
     <script>
         // Make function to do the Request
 
@@ -37,15 +38,35 @@
                 // If Request is Finished and Response is Ready and Status
                 // Code is 200 (ok) Get The Response Text
                 if (this.readyState === 4 && this.status === 200) {
-                    /*  console.log(this.responseText);
-                      console.log(myRequest);*/
+                    // console.log(this.responseText);
+                    // console.log(JSON.parse(this.responseText));
+                    /*   console.log(myRequest);*/
+
+                    //convert ResponseText To JS Object
+                    var myJsObject = JSON.parse(this.responseText);//(4) [{…}, {…}, {…}, {…}]
+                    myText = "";
+
+                    for (let i = 0; i < myJsObject.length; i++) {
+                        // console.log(myJsObject[i].username);
+                        myText = myText + myJsObject[i].username + "<br>";
+                        console.log(myText);// ekher shi btsir fia
+                        //Osama<br>alex<br>Sayed<br>Sameh<br>
+
+                    }
+
+                    document.getElementById("show").innerHTML = myText;
+                    //Osama
+                    //alex
+                    //Sayed
+                    //Sameh
+
                 }
 
 
             };
 
             //XMLHttpRequest.open(Method , URL , Async , User , Password)
-            myRequest.open('GET', 'https://docs.github.com/en/rest/reference/users', true);
+            myRequest.open('GET', 'object.json', true);
             myRequest.send();//send to server
 
         }
@@ -60,3 +81,204 @@
 </body>
 
 </html>
+---------------------------------------------------------------------------------------------------------------
+ -->
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button onclick="getRepos()">Get Name</button>
+    <div id="show"></div>
+    <script>
+        function getRepos() {
+            var myRequest = new XMLHttpRequest();
+            myRequest.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    console.log(this.responseText);
+                }
+            };
+
+            // myRequest.open("GET", "auth.php?name=Osama&lastlogin=Today", true);
+            // myRequest.send();
+            //////////////////////////////////
+            myRequest.open("POST", "auth.php", true);
+            myRequest.setRequestHeader(
+                "Content-Type",
+                "application/x-www-form-urlencoded")
+            myRequest.send("name=Sayed&lastlogin=Today");
+        }
+    </script>
+
+</body>
+
+</html>
+--------------------------------------------------------------------------------------------------------
+ -->
+
+
+ <!DOCTYPE html>
+ <html lang="en">
+ 
+ <head>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>jquery Ajax Load</title>
+ </head>
+ 
+ <body>
+     <input type="text" class="my-comment">
+     <button>Get Info</button>
+    <div id="show"></div>
+     <script src="jquery-3.6.0.min.js"></script>
+     <script>
+         $(function () {
+             $('button').on('click', function () {
+              $.ajax({
+                  //type: "POST" // Alias For Method => JQuery Before 1.9.0
+                  //cache:false // cache the Request , Default is True
+                  //async: false , // Asynchronous Or No
+                  //timeout : 3000 , // Timeout For The Request
+                  //dataType: 'html'// Data Expected From The server Response , Default is Intell Guess
+                  //username:'osama',//For Authentication
+                  //password:'SoulSoul', // For Authentication
+                  //ContentType: 'multipart/form-data,'// Content Type For the Request , Default i application
+                 // is application/x-www-form-urlencoded
+        method: "POST",// Method Used For The Request
+   url: "comments.php",// URL TO Send The Request is Current URL
+   data: {
+ comment: $(".my-comment").val() }, 
+                      // Data To Send with the Request
+ 
+ beforeSend: function(xhr) {
+     console.log(`Before Send`);
+ },
+ 
+ 
+ 
+ 
+ 
+   success : function (data , status , xhr) {
+                          //function to run when Request Succeeded
+     console.log(data);// Data
+       console.log(status);// Request Status
+                          console.log(xhr); // XHR Object
+                          console.log(`Success`);
+                          $("#show").html(data);
+  
+   },
+  error: function (xhr , status , error) {
+                          console.log(xhr); // xhr Object
+                          console.log(status); // Request Status
+   console.log(error);// Error Message
+ },
+  complete: function (xhr , status) 
+ {
+                          // Function To Run when Request Is Complete
+       console.log(xhr);
+       console.log(status);
+       console.log(`complete`);
+ 
+  }
+ 
+  })
+  });
+     });
+ 
+ 
+ //////////////////////////////////////////////
+ //ex1
+         // $(function () {
+         //     $("#show").load("demo-one.html .content", function (resTxt, stTxt, xhr) {
+         //         // 3param hene byejo by default
+         //         if (stTxt === "success") {
+         //             console.log("Data Loaded");
+ 
+         //         }
+         //     })
+         // });
+ 
+ 
+ 
+ ///////////////////////////////////////
+ //ex2
+ // <button data-page="demo-one.html">Get demo One</button>
+ //     <button data-page="demo-two.html">Get Demo Two</button>
+ //     <div id="show"></div>
+     // <script src="jquery-3.6.0.min.js">
+     //
+     
+ //         $(function () {
+ //             $('button').on('click', function () {
+ 
+ //                 $("#show").load($(this).data("page"), function (
+ //                     resTxt,
+ //                     stTxt,
+ //                     xhr
+ //                 ) {
+ //                     if (stTxt === "success") {
+ //                         console.log("Data Loaded");
+ //                     }
+ 
+ //                 });
+ //             });
+ //         });
+ 
+ /////////////////////////////////////////
+ // video 8 part1
+ // <button>Get Info</button>
+ //    <div id="show"></div>
+ //     <script src="jquery-3.6.0.min.js"></script>
+ //     <script>
+ //         $(function () {
+ //             $('button').on('click', function () {
+ //                 $.get("auth.php?name=Osama&lastlogin=Today", function (
+ //                     data,
+ //                     status,
+ //                     xhr
+ //                 ) {
+ //                     console.log(data);
+ //                     console.log(status);
+ //                     console.log(xhr);
+                     
+ //                 })
+ //            });
+ //     });
+ ////////////////////////////////////////
+ 
+ //video 8 part 2 post
+ // <button>Get Info</button>
+ //    <div id="show"></div>
+ //     <script src="jquery-3.6.0.min.js"></script>
+ //     <script>
+ //         $(function () {
+ //             $('button').on('click', function () {
+ //                 $.post("auth.php",{name:"Osama", lastlogin:"Today"}, function (
+ //                     data,
+ //                     status,
+ //                     xhr
+ //                 ) {
+ //                     console.log(data);
+ //                     console.log(status);
+ //                     console.log(xhr);
+                     
+ //                 })
+ //            });
+ //     });
+ ///////////////////////////////
+     </script>
+ </body>
+ 
+ </html>
